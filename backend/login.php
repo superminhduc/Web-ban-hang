@@ -1,52 +1,60 @@
 <?php
-// Bật hiển thị lỗi để debug
+// Bật hiển thị lỗi để dễ debug trong quá trình phát triển
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-session_start();
-require_once 'connect.php'; // Kết nối database
+session_start(); // Khởi động session để lưu đăng nhập người dùng
 
-// Biến chứa lỗi để hiển thị dưới form
+require_once 'connect.php'; // Kết nối đến database
+
+// Biến để lưu lỗi và hiển thị ra giao diện
 $error = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Lấy dữ liệu từ form (phòng null)
+
+    // Lấy dữ liệu từ form, tránh null bằng toán tử ?? ''
     $username = trim($_POST['username'] ?? '');
     $password = trim($_POST['password'] ?? '');
 
-    // Kiểm tra dữ liệu có trống không
+    // Kiểm tra nếu người dùng bỏ trống tài khoản hoặc mật khẩu
     if ($username === '' || $password === '') {
         $error = 'Vui lòng nhập đầy đủ tài khoản và mật khẩu!';
     } else {
-        // Truy vấn kiểm tra người dùng
+
+        // Chuẩn bị câu lệnh kiểm tra tài khoản (dùng Prepared Statement để tránh SQL Injection)
         $sql = "SELECT id, username, password FROM users WHERE username = ? LIMIT 1";
         $stmt = $conn->prepare($sql);
 
+        // Nếu câu prepare thất bại
         if (!$stmt) {
-            // Lỗi prepare SQL
             $error = 'Lỗi hệ thống, vui lòng thử lại sau!';
         } else {
+
+            // Gán giá trị tham số và thực thi lệnh SQL
             $stmt->bind_param("s", $username);
             $stmt->execute();
             $result = $stmt->get_result();
 
-            // Nếu có tài khoản tồn tại
+            // Nếu tìm thấy tài khoản
             if ($result->num_rows > 0) {
                 $row = $result->fetch_assoc();
 
-                // So sánh mật khẩu (chưa mã hóa, cho bài lab)
+                // So sánh mật khẩu (phiên bản đơn giản cho bài lab, chưa mã hoá)
                 if ($password === $row['password']) {
-                    // Lưu session
+
+                    // Lưu thông tin vào session
                     $_SESSION['user_id'] = $row['id'];
                     $_SESSION['username'] = $row['username'];
 
-                    // Đăng nhập thành công → về trang quản lý sản phẩm
+                    // Đăng nhập thành công → chuyển sang trang chính
                     header("Location: /Web-ban-hang/index.html");
                     exit();
                 } else {
+                    // Mật khẩu sai
                     $error = 'Sai mật khẩu!';
                 }
             } else {
+                // Không tìm thấy tài khoản
                 $error = 'Tài khoản không tồn tại!';
             }
         }
@@ -58,6 +66,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <title>Đăng nhập</title>
+
+    <!-- CSS giao diện login -->
     <style>
         body { 
             font-family: Arial, sans-serif;
@@ -127,17 +137,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <div class="login-box">
     <h2>Đăng nhập</h2>
-    <!-- action trống = gửi về chính login.php -->
+
+    <!-- action="" nghĩa là submit trở lại chính login.php -->
     <form action="" method="POST">
         <input type="text" name="username" placeholder="Tài khoản" required>
         <input type="password" name="password" placeholder="Mật khẩu" required>
         <button type="submit">Đăng nhập</button>
     </form>
 
+    <!-- Nếu có lỗi thì hiển thị -->
     <?php if ($error !== ''): ?>
         <div class="error"><?php echo htmlspecialchars($error); ?></div>
     <?php endif; ?>
 
+    <!-- Link quay lại trang chủ -->
     <div class="back-link">
         <a href="/Web-ban-hang/index.html">⟵ Quay lại trang chính</a>
     </div>
