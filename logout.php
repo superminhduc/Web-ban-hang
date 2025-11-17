@@ -1,10 +1,15 @@
 <?php
 session_start();
+
+// Hủy toàn bộ session
 session_unset();
 session_destroy();
 
-// Sau khi logout -> quay về trang login
-header("Location: /Web-ban-hang/login.html");
-// Nếu muốn quay về index thì thay bằng: /Web-ban-hang/index.html
+// Chặn cache
+header("Cache-Control: no-cache, must-revalidate");
+header("Expires: 0");
+
+// Chuyển về trang login
+header("Location: login.html");
 exit();
 ?>

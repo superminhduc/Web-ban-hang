@@ -1,9 +1,9 @@
 README - ĐỒ ÁN LẬP TRÌNH ỨNG DỤNG WEB
 ====================================
 
-NHÓM: ____________
+NHÓM: 6
 HỌC PHẦN: Lập Trình Ứng Dụng Web
-Giảng viên: __________________
+Giảng viên: Trần Công Thanh
 
 ----------------------------------------------------------------------
 I. THÔNG TIN THÀNH VIÊN
@@ -25,21 +25,20 @@ III. CÁCH CÀI ĐẶT & CHẠY DỰ ÁN (LOCALHOST - XAMPP)
 ----------------------------------------------------------------------
 1. Cài đặt XAMPP
 2. Copy toàn bộ thư mục SourceCode vào:
-   htdocs/<ten_du_an>/
+   htdocs/Web-ban-hang/
 3. Khởi động Apache và MySQL
 4. Import Database:
    - Mở phpMyAdmin
-   - Tạo database mới: <ten_database>
-   - Import file: Database/database.sql
+   - Tạo database mới: qlbandoannhanh3
+   - Import file: Database/qlbandoannhanh3.sql
 5. Chạy dự án:
-   http://localhost/<ten_du_an>
+   http://localhost:8080/Web-ban-hang/login.html
 
 ----------------------------------------------------------------------
 IV. TÀI KHOẢN ĐĂNG NHẬP
 ----------------------------------------------------------------------
 Ví dụ (cập nhật theo nhóm):
 - admin / 123456
-- user  / 123456
 
 ----------------------------------------------------------------------
 V. LINK TRIỂN KHAI ONLINE (FREE HOST)
@@ -50,13 +49,12 @@ URL: https://_____________________________________
 VI. LINK GITHUB (BẮT BUỘC)
 ----------------------------------------------------------------------
 Repo chính (public): 
-https://github.com/________________________________
+https://github.com/superminhduc/Web-ban-hang
 
 Nhánh từng sinh viên (BẮT BUỘC):
-- SV1: https://github.com/.../tree/<branch_sv1>
-- SV2: https://github.com/.../tree/<branch_sv2>
-- SV3: https://github.com/.../tree/<branch_sv3>
-
+- SV1: https://github.com/superminhduc/Web-ban-hang/tree/NguyenPhanVinhPhat
+- SV2: https://github.com/superminhduc/Web-ban-hang/tree/TranPhuocNhan
+- SV3: https://github.com/superminhduc/Web-ban-hang/tree/NguyenMinhDuc
 Ghi chú:
 => Mỗi thành viên phải có log commit rõ ràng xuyên suốt 3 tuần.
 => Không có log = không đạt đồ án (theo yêu cầu học phần).
