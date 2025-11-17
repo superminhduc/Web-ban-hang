@@ -1,260 +1,434 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Đăng Nhập / Đăng Ký - Nhân Phát Đức Beauty</title>
+    <meta charset="UTF-8">
+    <title>Đăng Nhập / Đăng Ký – Cartoon Cute</title>
+
     <style>
-        /* CSS giống như trước */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+        @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700&display=swap');
+
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        }
+
+        body {
+            font-family: "Baloo 2", cursive;
             min-height: 100vh;
+            background: radial-gradient(circle at top, #fff9fb 0, #ffe1ec 35%, #ff9fb8 75%, #ff6b81 100%);
+            color: #ecf0f1;
+            overflow-x: hidden;
+            position: relative;
+            padding: 20px;
         }
-        .container {
-            background: #fff;
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+
+        /* ===== TUYẾT RƠI DÀY HƠN ===== */
+        .snowflakes {
+            position: fixed;
             width: 100%;
-            max-width: 400px;
+            top: 0;
+            left: 0;
+            z-index: 5;
+            pointer-events: none;
         }
-        .toggle-buttons {
+
+        .snowflake {
+            position: fixed;
+            top: -10px;
+            color: #ffffff;
+            opacity: 0.95;
+            font-size: 18px;
+            animation: snow 7s linear infinite;
+        }
+
+        @keyframes snow {
+            0%   { transform: translateY(-10px) rotate(0deg); opacity: 0; }
+            10%  { opacity: 1; }
+            100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
+        }
+
+        .snowflake:nth-child(1){left:4%; animation-duration:8s;}
+        .snowflake:nth-child(2){left:11%; animation-duration:6.5s;}
+        .snowflake:nth-child(3){left:18%; animation-duration:9s;}
+        .snowflake:nth-child(4){left:26%; animation-duration:7.5s;}
+        .snowflake:nth-child(5){left:34%; animation-duration:8.5s;}
+        .snowflake:nth-child(6){left:45%; animation-duration:7s;}
+        .snowflake:nth-child(7){left:56%; animation-duration:9.5s;}
+        .snowflake:nth-child(8){left:64%; animation-duration:7.2s;}
+        .snowflake:nth-child(9){left:73%; animation-duration:8.8s;}
+        .snowflake:nth-child(10){left:81%; animation-duration:6.8s;}
+        .snowflake:nth-child(11){left:90%; animation-duration:9.2s;}
+        .snowflake:nth-child(12){left:96%; animation-duration:7.7s;}
+
+        /* ===== DÒNG EMOJI TRÊN ===== */
+        .top-emoji {
+            text-align: center;
+            font-size: 26px;
+            margin-top: 2px;
+            margin-bottom: 14px;
+            text-shadow: 0 3px 8px rgba(0,0,0,0.25);
+        }
+
+        /* ===== WRAPPER: CARD + BANNER XẾP THEO CỘT ===== */
+        .page-wrap {
+            min-height: calc(100vh - 40px);
             display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 24px; /* khoảng cách giữa card và banner */
+        }
+
+        /* ===== CARD LUXURY HỒNG – TỐI ===== */
+        .auth-card {
+            width: 100%;
+            max-width: 460px;
+            background:
+                radial-gradient(circle at top left, rgba(255,255,255,0.16), transparent 55%),
+                linear-gradient(145deg, #211829, #1b1725 55%, #28152b 100%);
+            border-radius: 28px;
+            padding: 26px 30px 30px;
+            box-shadow:
+                0 20px 45px rgba(0,0,0,0.55),
+                0 0 0 1px rgba(255,255,255,0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 2px;
+            background: linear-gradient(120deg, #ffe9a9, #ffb3c6, #ffe9a9);
+            -webkit-mask:
+                linear-gradient(#000 0 0) content-box,
+                linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+                    mask-composite: exclude;
+            opacity: 0.85;
+            pointer-events: none;
+        }
+
+        /* ===== TAB LOGIN / REGISTER ===== */
+        .tab-switch {
+            display: flex;
+            background: rgba(0,0,0,0.45);
+            border-radius: 999px;
+            padding: 4px;
+            margin-bottom: 22px;
+            position: relative;
+        }
+
+        .tab-btn {
+            flex: 1;
+            border: none;
+            background: transparent;
+            color: #f8c9d6;
+            font-size: 16px;
+            padding: 8px 0;
+            border-radius: 999px;
+            cursor: pointer;
+            position: relative;
+            z-index: 2;
+        }
+
+        .tab-btn.active {
+            color: #3b1a27;
+            font-weight: 700;
+        }
+
+        .tab-highlight {
+            position: absolute;
+            top: 4px;
+            bottom: 4px;
+            width: 50%;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #ffe6a7, #ffc371);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.35);
+            transition: transform 0.25s ease;
+            z-index: 1;
+        }
+        .tab-highlight.right {
+            transform: translateX(100%);
+        }
+
+        .card-title {
+            text-align: center;
+            font-size: 22px;
+            margin-bottom: 6px;
+        }
+
+        .card-subtitle {
+            text-align: center;
+            font-size: 13px;
+            color: #f0d2df;
             margin-bottom: 20px;
         }
-        .toggle-btn {
-            flex: 1;
-            padding: 10px;
-            background-color: #ddd;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-            text-align: center;
+
+        .field {
+            margin-bottom: 14px;
         }
-        .toggle-btn.active {
-            background-color: #5a574c;
-            color: #fff;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        .form-group label {
+
+        label {
             display: block;
-            margin-bottom: 5px;
-            color: #555;
+            font-size: 14px;
+            color: #ffeaf2;
+            margin-bottom: 4px;
         }
-        .form-group input {
+
+        .input {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
+            padding: 9px 12px;
+            border-radius: 14px;
+            border: 1px solid rgba(255,255,255,0.25);
+            background: rgba(0,0,0,0.45);
+            color: #ffffff;
+            font-size: 14px;
+            outline: none;
+            transition: 0.2s;
         }
-        .btn {
+
+        .input::placeholder {
+            color: rgba(236, 240, 241, 0.6);
+        }
+
+        .input:focus {
+            border-color: #ffcf7f;
+            box-shadow: 0 0 0 1px rgba(255,207,127,0.6);
+            background: rgba(0,0,0,0.65);
+        }
+
+        .primary-btn,
+        .ghost-btn {
             width: 100%;
-            padding: 10px;
-            background-color: #5a574c;
-            color: #fff;
+            border-radius: 999px;
+            padding: 9px 0;
             border: none;
-            border-radius: 4px;
+            font-size: 15px;
+            font-weight: 700;
             cursor: pointer;
-            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 4px;
         }
-        .btn:hover {
-            background-color: #4a4740;
+
+        .primary-btn {
+            background: linear-gradient(135deg, #3ddc97, #1abc9c);
+            color: #ffffff;
+            box-shadow: 0 8px 22px rgba(0,0,0,0.45);
         }
-        .links {
-            text-align: center;
-            margin-top: 15px;
+
+        .primary-btn:hover {
+            transform: translateY(-1px);
         }
-        .links a {
-            color: #5a574c;
-            text-decoration: none;
-            font-size: 14px;
-        }
-        .links a:hover {
-            text-decoration: underline;
-        }
-        .error {
-            color: red;
-            font-size: 14px;
+
+        .ghost-btn {
+            background: transparent;
+            color: #ffd27f;
+            border: 1px solid rgba(255,210,127,0.7);
             margin-top: 10px;
         }
-        .form-section {
-            display: none;
+
+        .ghost-btn:hover {
+            background: rgba(255,210,127,0.08);
         }
-        .form-section.active {
-            display: block;
+
+        .small-text {
+            font-size: 11px;
+            color: #f2c9d7;
+            margin-top: 6px;
+            text-align: center;
+        }
+
+        .forgot {
+            text-align: right;
+            margin-top: 8px;
+            font-size: 12px;
+        }
+
+        .forgot a {
+            color: #ffd27f;
+            text-decoration: none;
+        }
+
+        .forgot a:hover {
+            text-decoration: underline;
+        }
+
+        .tab-pane { display: none; }
+        .tab-pane.active { display: block; }
+
+        /* ===== BANNER NOEL CHẠY – ĐI CÙNG CARD ===== */
+        .santa {
+            font-size: 40px;
+            text-align: center;
+            pointer-events: none;
+        }
+        .santa-track {
+            display: inline-block;
+            white-space: nowrap;
+            animation: santaMove 14s linear infinite;
+        }
+        @keyframes santaMove {
+            from { transform: translateX(100%); }
+            to   { transform: translateX(-100%); }
+        }
+
+        @media (max-width: 520px) {
+            body {
+                padding: 14px;
+            }
+            .auth-card {
+                padding: 22px 18px 24px;
+            }
         }
     </style>
 </head>
+
 <body>
-    <div class="container">
-        <div class="toggle-buttons">
-            <button class="toggle-btn active" id="login-toggle">Đăng Nhập</button>
-            <button class="toggle-btn" id="register-toggle">Đăng Ký</button>
+    <!-- TUYẾT RƠI -->
+    <div class="snowflakes">
+        <div class="snowflake">❄️</div>
+        <div class="snowflake">✨</div>
+        <div class="snowflake">❄️</div>
+        <div class="snowflake">✨</div>
+        <div class="snowflake">❄️</div>
+        <div class="snowflake">✨</div>
+        <div class="snowflake">❄️</div>
+        <div class="snowflake">✨</div>
+        <div class="snowflake">❄️</div>
+        <div class="snowflake">✨</div>
+        <div class="snowflake">❄️</div>
+        <div class="snowflake">✨</div>
+    </div>
+
+    <!-- EMOJI NOEL -->
+    <div class="top-emoji">
+        🎄🎅🎁🦌✨ 🎄🎅🎁🦌✨
+    </div>
+
+    <div class="page-wrap">
+        <!-- CARD LOGIN / REGISTER -->
+        <div class="auth-card">
+            <!-- TAB -->
+            <div class="tab-switch">
+                <div class="tab-highlight" id="tabHighlight"></div>
+                <button class="tab-btn active" id="btnLogin">Đăng Nhập</button>
+                <button class="tab-btn" id="btnRegister">Đăng Ký</button>
+            </div>
+
+            <div class="card-title">Chào mừng trở lại kho Noel 🎀</div>
+            <div class="card-subtitle">
+                Đăng nhập để quản lý sản phẩm Giáng Sinh sang – xịn – mịn 💎
+            </div>
+
+            <!-- FORM ĐĂNG NHẬP -->
+            <div class="tab-pane active" id="paneLogin">
+                <form method="post" action="/Web-ban-hang/backend/login.php">
+                    <div class="field">
+                        <label for="loginUser">Email hoặc Tên đăng nhập:</label>
+                        <input class="input" type="text" id="loginUser" name="username"
+                               placeholder="vd: admin_noel" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="loginPass">Mật khẩu:</label>
+                        <input class="input" type="password" id="loginPass" name="password"
+                               placeholder="••••••••" required>
+                    </div>
+
+                    <div class="forgot">
+                        <a href="#">Quên mật khẩu?</a>
+                    </div>
+
+                    <button type="submit" class="primary-btn">
+                        🎄 Đăng Nhập
+                    </button>
+
+                    <div class="small-text">
+                        Chưa có tài khoản? Chuyển sang tab <b>Đăng Ký</b> để tạo mới nhé 💖
+                    </div>
+                </form>
+            </div>
+
+            <!-- FORM ĐĂNG KÝ -->
+            <div class="tab-pane" id="paneRegister">
+                <form method="post" action="/Web-ban-hang/backend/register.php">
+                    <div class="field">
+                        <label for="regUser">Tên đăng nhập:</label>
+                        <input class="input" type="text" id="regUser" name="username"
+                               placeholder="vd: santa_admin" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="regEmail">Email:</label>
+                        <input class="input" type="email" id="regEmail" name="email"
+                               placeholder="vd: santa@noel.com" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="regPass">Mật khẩu:</label>
+                        <input class="input" type="password" id="regPass" name="password"
+                               placeholder="Ít nhất 6 ký tự" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="regPass2">Nhập lại mật khẩu:</label>
+                        <input class="input" type="password" id="regPass2" name="password_confirm"
+                               placeholder="Nhập lại để xác nhận" required>
+                    </div>
+
+                    <button type="submit" class="primary-btn">
+                        ✨ Tạo tài khoản mới
+                    </button>
+
+                    <button type="button" class="ghost-btn" id="backToLogin">
+                        ⬅ Quay lại Đăng Nhập
+                    </button>
+                </form>
+            </div>
         </div>
 
-        <!-- Form Đăng Nhập -->
-        <div class="form-section active" id="login-form-section">
-            <h2>Đăng Nhập</h2>
-            <form id="login-form">
-                <div class="form-group">
-                    <label for="login-username">Email hoặc Tên đăng nhập:</label>
-                    <input type="text" id="login-username" name="username" required>
-                </div>
-                <div class="form-group">
-                    <label for="login-password">Mật khẩu:</label>
-                    <input type="password" id="login-password" name="password" required>
-                </div>
-                <button type="submit" class="btn">Đăng Nhập</button>
-                <div id="login-error" class="error"></div>
-            </form>
-        </div>
-
-        <!-- Form Đăng Ký -->
-        <div class="form-section" id="register-form-section">
-            <h2>Đăng Ký Tài Khoản</h2>
-            <form id="register-form">
-                <div class="form-group">
-                    <label for="register-fullname">Họ và tên:</label>
-                    <input type="text" id="register-fullname" name="fullname" required>
-                </div>
-                <div class="form-group">
-                    <label for="register-email">Email:</label>
-                    <input type="email" id="register-email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="register-password">Mật khẩu:</label>
-                    <input type="password" id="register-password" name="password" required>
-                </div>
-                <div class="form-group">
-                    <label for="register-confirm-password">Xác nhận mật khẩu:</label>
-                    <input type="password" id="register-confirm-password" name="confirm-password" required>
-                </div>
-                <button type="submit" class="btn">Đăng Ký</button>
-                <div id="register-error" class="error"></div>
-            </form>
-        </div>
-
-        <div class="links">
-            <a href="/forgot-password">Quên mật khẩu?</a> | <a href="/">Quay lại trang chủ</a>
+        <!-- BANNER ÔNG GIÀ NOEL & TUẦN LỘC CHẠY – ĐI CHUNG VỚI CARD -->
+        <div class="santa">
+            <div class="santa-track">
+                🎅🦌🦌 🎁 🎄 &nbsp; 🎅🦌🦌 🎁 🎄 &nbsp; 🎅🦌🦌 🎁 🎄
+            </div>
         </div>
     </div>
 
-    <!-- Notification -->
-    <div id="notification" class="notification" style="display: none;"></div>
-
     <script>
-        // Notification function
-        function showNotification(message) {
-            const notification = document.getElementById('notification');
-            notification.textContent = message;
-            notification.classList.add('show');
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 3000); // Hide after 3 seconds
+        const btnLogin    = document.getElementById('btnLogin');
+        const btnRegister = document.getElementById('btnRegister');
+        const paneLogin   = document.getElementById('paneLogin');
+        const paneRegister= document.getElementById('paneRegister');
+        const tabHighlight= document.getElementById('tabHighlight');
+        const backToLogin = document.getElementById('backToLogin');
+
+        function showLogin() {
+            btnLogin.classList.add('active');
+            btnRegister.classList.remove('active');
+            paneLogin.classList.add('active');
+            paneRegister.classList.remove('active');
+            tabHighlight.classList.remove('right');
         }
 
-        // Toggle giữa đăng nhập và đăng ký
-        const loginToggle = document.getElementById('login-toggle');
-        const registerToggle = document.getElementById('register-toggle');
-        const loginSection = document.getElementById('login-form-section');
-        const registerSection = document.getElementById('register-form-section');
+        function showRegister() {
+            btnRegister.classList.add('active');
+            btnLogin.classList.remove('active');
+            paneRegister.classList.add('active');
+            paneLogin.classList.remove('active');
+            tabHighlight.classList.add('right');
+        }
 
-        loginToggle.addEventListener('click', function() {
-            loginToggle.classList.add('active');
-            registerToggle.classList.remove('active');
-            loginSection.classList.add('active');
-            registerSection.classList.remove('active');
-        });
-
-        registerToggle.addEventListener('click', function() {
-            registerToggle.classList.add('active');
-            loginToggle.classList.remove('active');
-            registerSection.classList.add('active');
-            loginSection.classList.remove('active');
-        });
-
-        // Xử lý form đăng nhập
-        document.getElementById('login-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const username = document.getElementById('login-username').value;
-            const password = document.getElementById('login-password').value;
-            const errorMsg = document.getElementById('login-error');
-
-            if (!username || !password) {
-                errorMsg.textContent = 'Vui lòng nhập đầy đủ thông tin!';
-                return;
-            }
-
-            // Gửi dữ liệu đến backend/login.php
-            const formData = new FormData();
-            formData.append('username', username);
-            formData.append('password', password);
-
-            fetch('backend/login.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.text())
-            .then(data => {
-                if (data.includes('Đăng nhập thành công!')) {
-                    showNotification('Đăng nhập thành công!');
-                    window.location.href = 'index.html';
-                } else if (data.includes('Sai mật khẩu!')) {
-                    errorMsg.textContent = 'Sai mật khẩu!';
-                } else if (data.includes('Tài khoản không tồn tại!')) {
-                    errorMsg.textContent = 'Tài khoản không tồn tại!';
-                } else {
-                    errorMsg.textContent = 'Lỗi không xác định!';
-                }
-            })
-            .catch(err => {
-                console.error(err);
-                errorMsg.textContent = 'Lỗi kết nối!';
-            });
-        });
-
-        // Xử lý form đăng ký
-        document.getElementById('register-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const fullname = document.getElementById('register-fullname').value;
-            const email = document.getElementById('register-email').value;
-            const password = document.getElementById('register-password').value;
-            const confirmPassword = document.getElementById('register-confirm-password').value;
-            const errorMsg = document.getElementById('register-error');
-
-            if (!fullname || !email || !password || !confirmPassword) {
-                errorMsg.textContent = 'Vui lòng nhập đầy đủ thông tin!';
-                return;
-            }
-            if (password !== confirmPassword) {
-                errorMsg.textContent = 'Mật khẩu xác nhận không khớp!';
-                return;
-            }
-
-            // Kiểm tra email đã tồn tại
-            const storedUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
-            if (storedUsers.find(u => u.email === email)) {
-                errorMsg.textContent = 'Email này đã được đăng ký!';
-                return;
-            }
-
-            // Lưu tài khoản mới vào localStorage
-            storedUsers.push({ fullname, email, password });
-            localStorage.setItem('registeredUsers', JSON.stringify(storedUsers));
-
-            showNotification('Đăng ký thành công! Vui lòng đăng nhập.');
-            // Chuyển sang form đăng nhập
-            loginToggle.click();
-        });
+        btnLogin.addEventListener('click', showLogin);
+        btnRegister.addEventListener('click', showRegister);
+        backToLogin.addEventListener('click', showLogin);
     </script>
 </body>
 </html>

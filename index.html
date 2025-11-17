@@ -1,103 +1,569 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
-    <title>Quản lý Sản phẩm</title>
-    <link rel="stylesheet" href="/css/styles.css">
+    <title>Quản lý Sản phẩm – Cartoon Cute</title>
 
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700&display=swap');
+
         body {
-            font-family: Arial, sans-serif;
-            background: #f5f6fa;
             margin: 0;
             padding: 20px;
+            padding-bottom: 70px; /* chừa chỗ cho tuần lộc, tránh đè nội dung */
+            font-family: "Baloo 2", cursive;
+            background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
         }
-        h1 {
-            text-align: center;
-            color: #2c3e50;
-            margin-bottom: 20px;
+
+        /* CUTE SNOW */
+        .snowflakes {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 20;
         }
-        .btn-add {
-            display: inline-block;
-            padding: 10px 16px;
-            background: #27ae60;
+
+        .snowflake {
+            position: fixed;
+            top: -10px;
             color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: 600;
-            margin-bottom: 15px;
+            opacity: 0.95;
+            font-size: 22px;
+            animation: snow 8s linear infinite;
         }
+
+        @keyframes snow {
+            0% { transform: translateY(-10px) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
+        }
+
+        .snowflake:nth-child(1){left:5%;animation-duration:9s;}
+        .snowflake:nth-child(2){left:15%;animation-duration:7s;}
+        .snowflake:nth-child(3){left:30%;animation-duration:10s;}
+        .snowflake:nth-child(4){left:50%;animation-duration:8s;}
+        .snowflake:nth-child(5){left:70%;animation-duration:9s;}
+        .snowflake:nth-child(6){left:85%;animation-duration:11s;}
+
+        /* HEADER */
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .title {
+            font-size: 40px;
+            color: #b31217;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-shadow: 0 3px 6px rgba(0,0,0,0.18);
+        }
+
+        /* ===== USER MENU – STYLE KIỂU GARENA ===== */
+        .user-menu {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .user-avatar-wrap {
+            position: relative;
+        }
+
+        .avatar {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff9aa2, #ff6b81);
+            border: 3px solid #fff;
+            font-size: 22px;
+            font-weight: 700;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+        }
+
+        .status-dot {
+            position: absolute;
+            right: 0;
+            bottom: 2px;
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            background: #2ecc71; /* online */
+        }
+
+        .user-info-mini {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.25);
+        }
+
+        .user-role {
+            font-size: 12px;
+            color: #ffecec;
+            opacity: 0.9;
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 60px;
+            right: 0;
+            width: 260px;
+            background: rgba(255,255,255,0.96);
+            border-radius: 18px;
+            padding: 14px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+            display: none;
+            z-index: 50;
+        }
+        .dropdown.show { display: block; }
+
+        .dropdown-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ffe1e6;
+        }
+
+        .dropdown-header .mini-circle {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff9aa2, #ff6b81);
+            color: #fff;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dropdown-header-text {
+            display: flex;
+            flex-direction: column;
+            font-size: 13px;
+        }
+
+        .dropdown-header-text b {
+            font-size: 14px;
+            color: #c0392b;
+        }
+
+        .current-status {
+            font-size: 12px;
+            color: #7f8c8d;
+        }
+
+        .status-list {
+            margin: 10px 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 8px;
+            border-radius: 12px;
+            font-size: 13px;
+            cursor: pointer;
+            color: #34495e;
+        }
+
+        .status-item:hover {
+            background: #ffecef;
+        }
+
+        .status-item.active {
+            background: #ffe1e6;
+            font-weight: 600;
+        }
+
+        .status-item .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .dot.online  { background:#2ecc71; }
+        .dot.busy    { background:#e74c3c; }
+        .dot.away    { background:#f1c40f; }
+
+        .logout-btn {
+            margin-top: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 8px 0;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #ff6b81, #ff4757);
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        /* BANNER NOEL */
+        .banner {
+            max-width: 650px;
+            margin: 18px auto 18px; /* thêm margin-bottom để không dính vào bảng */
+            padding: 10px 20px;
+            border-radius: 999px;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.96);
+            color: #d63031;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(255, 105, 135, 0.35);
+            position: relative;
+            z-index: 1; /* nằm trên background nhưng dưới tuyết */
+        }
+
+        /* ACTION BUTTONS */
+        .actions {
+            margin-top: 0; /* đã có margin-bottom của banner phía trên */
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 18px;
+            color: white;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 17px;
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+            transition: 0.2s;
+        }
+
+        .btn:hover { transform: translateY(-2px); }
+
+        .add-btn { background: #ff7675; }
+        .stat-btn { background: #ff4757; }
+
+        .revenue-btn {
+            background: linear-gradient(135deg, #ff6b81, #ff4757);
+            color: #ffffff !important;
+            padding: 10px 22px;
+            border-radius: 18px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 17px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 4px 12px rgba(255, 71, 87, 0.45);
+            border: 2px solid #ff9aa2;
+            transition: 0.25s;
+        }
+
+        .revenue-btn:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, #ff4757, #ff2e63);
+            box-shadow: 0 6px 16px rgba(255, 71, 87, 0.6);
+        }
+
+        .search-box {
+            background: white;
+            padding: 7px 14px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+        }
+
+        .search-box input {
+            border: none;
+            outline: none;
+            font-size: 16px;
+        }
+
+        .search-box button {
+            background: #2ecc71;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 20px;
+            color: white;
+            font-weight: 600;
+        }
+
+        /* TABLE CUTE */
         table {
             width: 100%;
+            margin-top: 20px;          /* cách actions một đoạn */
             border-collapse: collapse;
-            background: #fff;
-            border-radius: 8px;
+            background: #fff8f8;
+            border-radius: 18px;
             overflow: hidden;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+            position: relative;
+            z-index: 1;                /* đảm bảo không bị banner đè lên */
         }
-        th, td {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-            text-align: center;
-        }
+
         th {
-            background: #3498db;
-            color: #fff;
+            background: #ff6b81;
+            color: white;
+            padding: 12px;
+            font-size: 18px;
         }
-        tr:hover {
-            background: #ecf0f1;
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ffe1e6;
+            font-size: 16px;
         }
-        .btn-edit {
-            color: #e67e22;
-            text-decoration: none;
+
+        #tbodySP td:last-child {
+            white-space: nowrap;
+        }
+
+        #tbodySP td:last-child a {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 6px 14px;
+            margin: 0 3px;
+            border-radius: 999px;
+            font-size: 14px;
             font-weight: 600;
-        }
-        .btn-del {
-            color: #e74c3c;
             text-decoration: none;
-            font-weight: 600;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+            transition: 0.2s;
         }
-        img {
-            width: 80px;
-            border-radius: 4px;
+
+        #tbodySP td:last-child a:nth-of-type(1) {
+            background: linear-gradient(135deg, #ffb6c1, #ff8fa3);
+            color: #b31217;
+        }
+        #tbodySP td:last-child a:nth-of-type(1):hover {
+            background: linear-gradient(135deg, #ffc4ce, #ff9fb0);
+            transform: translateY(-2px);
+        }
+        #tbodySP td:last-child a:nth-of-type(1)::before {
+            content: "✏️";
+        }
+
+        #tbodySP td:last-child a:nth-of-type(2) {
+            background: linear-gradient(135deg, #ff7987, #ff4d63);
+            color: #ffffff;
+        }
+        #tbodySP td:last-child a:nth-of-type(2):hover {
+            background: linear-gradient(135deg, #ff8c99, #ff5d72);
+            transform: translateY(-2px);
+        }
+        #tbodySP td:last-child a:nth-of-type(2)::before {
+            content: "🗑️";
+        }
+
+        /* SANTA chạy ngang dưới cùng */
+        .santa {
+            position: absolute;
+            left: 0;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            font-size: 32px;
+            pointer-events: none;
+        }
+        .santa-track {
+            display: inline-block;
+            white-space: nowrap;
+            animation: santaMove 6s linear infinite;
+        }
+        @keyframes santaMove {
+            from { transform: translateX(100%); }
+            to   { transform: translateX(-100%); }
         }
     </style>
 </head>
+
 <body>
 
-    <h1>📦 Quản lý Sản phẩm</h1>
+<!-- CUTE SNOW -->
+<div class="snowflakes">
+    <div class="snowflake">❄️</div><div class="snowflake">✨</div><div class="snowflake">❄️</div>
+    <div class="snowflake">✨</div><div class="snowflake">❄️</div><div class="snowflake">✨</div>
+</div>
 
-    <a href="/trangweb/backend/add.php" class="btn-add">➕ Thêm sản phẩm</a>
+<!-- SANTA -->
+<div class="santa">
+    <div class="santa-track">🎅🦌🦌 &nbsp; 🎅🦌🦌 &nbsp; 🎅🦌🦌</div>
+</div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Tên sản phẩm</th>
-                <th>Giá</th>
-                <th>Mô tả</th>
-                <th>Hình ảnh</th>
-                <th>Số lượng</th>
-                <th>Thao tác</th>
-            </tr>
-        </thead>
-        <tbody id="tbodySP">
-            <tr><td colspan="7">Đang tải dữ liệu...</td></tr>
-        </tbody>
-    </table>
+<!-- TOPBAR -->
+<div class="topbar">
+    <div class="title">🎄 Quản lý Sản phẩm</div>
 
-    <script>
-        // Gọi tới file PHP lấy dữ liệu
-        fetch('/trangweb/backend/index.php')
-            .then(response => response.text())
-            .then(html => {
-                const tbody = document.getElementById('tbodySP');
-                tbody.innerHTML = html;
-            })
-            .catch(err => {
-                console.error(err);
-                document.getElementById('tbodySP').innerHTML =
-                    '<tr><td colspan="7">Lỗi tải dữ liệu!</td></tr>';
-            });
-    </script>
+    <?php if(isset($_SESSION['username'])):
+        $u = $_SESSION['username'];
+        $first = strtoupper($u[0]);
+    ?>
+    <div class="user-menu" id="userBtn">
+        <div class="user-avatar-wrap">
+            <div class="avatar"><?= $first ?></div>
+            <div class="status-dot" id="statusDot"></div>
+        </div>
+        <div class="user-info-mini">
+            <span class="user-name"><?= htmlspecialchars($u) ?></span>
+            <span class="user-role" id="currentStatus">Đang online</span>
+        </div>
+
+        <div class="dropdown" id="dropdownBox">
+            <div class="dropdown-header">
+                <div class="mini-circle"><?= $first ?></div>
+                <div class="dropdown-header-text">
+                    <b><?= htmlspecialchars($u) ?></b>
+                    <span class="current-status" id="currentStatusLabel">Trạng thái: Online</span>
+                </div>
+            </div>
+
+            <ul class="status-list">
+                <li class="status-item active" data-label="Online" data-dot="online">
+                    <span class="dot online"></span> Online
+                </li>
+                <li class="status-item" data-label="Bận" data-dot="busy">
+                    <span class="dot busy"></span> Bận
+                </li>
+                <li class="status-item" data-label="Đi vắng" data-dot="away">
+                    <span class="dot away"></span> Đi vắng
+                </li>
+            </ul>
+
+            <a href="logout.html" class="logout-btn">
+                🚪 Đăng xuất
+            </a>
+        </div>
+    </div>
+    <?php endif; ?>
+</div>
+
+<!-- CUTE BANNER -->
+<div class="banner">
+    🎅✨ Merry Christmas! Chúc bạn bán được nhiều đơn 🎁
+</div>
+
+<!-- ACTION BAR -->
+<div class="actions">
+    <a href="add.html" class="btn add-btn">➕ Thêm</a>
+
+    <a href="/Web-ban-hang/backend/thongke.php" class="btn stat-btn">📊 Thống kê</a>
+
+    <a href="/Web-ban-hang/backend/thongkedoanhthu.php" class="btn revenue-btn">📈 Doanh thu</a>
+
+    <div class="search-box">
+        <span>🔍</span>
+        <input id="searchInput" placeholder="Tìm sản phẩm...">
+        <button onclick="searchTable()">Tìm</button>
+    </div>
+</div>
+
+<!-- TABLE -->
+<table>
+    <thead>
+        <tr>
+            <th>ID</th><th>Tên</th><th>Giá</th><th>Mô tả</th><th>Hình</th><th>Số lượng</th><th>Thao tác</th>
+        </tr>
+    </thead>
+
+    <tbody id="tbodySP">
+        <tr><td colspan="7" style="text-align:center;">Đang tải...</td></tr>
+    </tbody>
+</table>
+
+<script>
+// load danh sách sản phẩm
+fetch('/Web-ban-hang/backend/index.php')
+    .then(res => res.text())
+    .then(html => document.getElementById("tbodySP").innerHTML = html);
+
+// tìm kiếm
+function searchTable() {
+    const key = document.getElementById("searchInput").value.toLowerCase();
+    document.querySelectorAll("#tbodySP tr").forEach(row => {
+        const name = row.cells[1]?.innerText.toLowerCase();
+        row.style.display = (!key || name.includes(key)) ? "" : "none";
+    });
+}
+
+// toggle dropdown
+const userBtn = document.getElementById("userBtn");
+const dropdown = document.getElementById("dropdownBox");
+
+userBtn?.addEventListener("click", e => {
+    e.stopPropagation();
+    dropdown.classList.toggle("show");
+});
+
+document.addEventListener("click", () => {
+    dropdown?.classList.remove("show");
+});
+
+// xử lý đổi trạng thái giống Garena
+const statusItems = document.querySelectorAll(".status-item");
+const statusText  = document.getElementById("currentStatus");
+const statusLabel = document.getElementById("currentStatusLabel");
+const statusDot   = document.getElementById("statusDot");
+
+statusItems.forEach(item => {
+    item.addEventListener("click", e => {
+        e.stopPropagation();
+        statusItems.forEach(i => i.classList.remove("active"));
+        item.classList.add("active");
+
+        const label = item.getAttribute("data-label");
+        const dot   = item.getAttribute("data-dot");
+
+        statusText.textContent  = label;
+        statusLabel.textContent = "Trạng thái: " + label;
+
+        if (!statusDot) return;
+        statusDot.className = "status-dot";
+        if (dot === "online")  statusDot.style.background = "#2ecc71";
+        if (dot === "busy")    statusDot.style.background = "#e74c3c";
+        if (dot === "away")    statusDot.style.background = "#f1c40f";
+    });
+});
+</script>
+
 </body>
 </html>

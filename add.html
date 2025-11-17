@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm Sản Phẩm – Cartoon Cute</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: "Baloo 2", cursive;
+            background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative; /* để Santa absolute bám theo toàn trang */
+        }
+
+        /* CUTE SNOW – giống index */
+        .snowflakes {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 20;
+        }
+
+        .snowflake {
+            position: fixed;
+            top: -10px;
+            color: #fff;
+            opacity: 0.95;
+            font-size: 20px;
+            animation: snow 8s linear infinite;
+        }
+
+        @keyframes snow {
+            0% { transform: translateY(-10px) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
+        }
+
+        .snowflake:nth-child(1){left:5%;animation-duration:9s;}
+        .snowflake:nth-child(2){left:15%;animation-duration:7s;}
+        .snowflake:nth-child(3){left:30%;animation-duration:10s;}
+        .snowflake:nth-child(4){left:50%;animation-duration:8s;}
+        .snowflake:nth-child(5){left:70%;animation-duration:9s;}
+        .snowflake:nth-child(6){left:85%;animation-duration:11s;}
+
+        /* TOPBAR giống style index cute */
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .title {
+            font-size: 34px;
+            color: #b31217;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-shadow: 0 3px 6px rgba(0,0,0,0.18);
+        }
+
+        .back-btn {
+            padding: 8px 18px;
+            border-radius: 20px;
+            background: #2ecc71;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+        }
+
+        .back-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        /* BANNER */
+        .banner {
+            margin-top: 18px;
+            background: #ffecec;
+            padding: 12px 20px;
+            border-radius: 20px;
+            font-size: 17px;
+            color: #d63031;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        /* FORM CARD */
+        .wrapper {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            margin-bottom: 80px; /* chừa chỗ cho Santa bên dưới */
+        }
+
+        .form-card {
+            width: 100%;
+            max-width: 520px;
+            background: #fff8f8;
+            border-radius: 24px;
+            padding: 24px 26px 28px;
+            box-shadow: 0 10px 24px rgba(0,0,0,0.18);
+        }
+
+        .form-title {
+            text-align: center;
+            font-size: 26px;
+            color: #e74c3c;
+            margin-bottom: 6px;
+        }
+
+        .form-subtitle {
+            text-align: center;
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            font-size: 15px;
+            color: #c0392b;
+            margin-bottom: 4px;
+        }
+
+        .input,
+        .textarea {
+            width: 100%;
+            border-radius: 16px;
+            border: 2px solid #ffd6dc;
+            padding: 8px 12px;
+            font-size: 15px;
+            font-family: inherit;
+            outline: none;
+            background: #ffffff;
+            transition: 0.15s;
+        }
+
+        .input:focus,
+        .textarea:focus {
+            border-color: #ff6b81;
+            box-shadow: 0 0 0 2px rgba(255, 107, 129, 0.2);
+        }
+
+        .textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .field {
+            margin-bottom: 14px;
+        }
+
+        /* SUBMIT BUTTON */
+        .submit-btn {
+            width: 100%;
+            border: none;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #ffb347, #ff6b6b);
+            color: white;
+            font-size: 17px;
+            font-weight: 700;
+            padding: 10px 0;
+            margin-top: 8px;
+            cursor: pointer;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.18);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .note {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-top: 4px;
+        }
+
+        /* SANTA LINE – Ở CUỐI TRANG, KHÔNG THEO SCROLL */
+        .santa {
+            position: absolute;  /* quan trọng: không dùng fixed */
+            left: 0;
+            bottom: 8px;
+            width: 100%;
+            text-align: center;
+            font-size: 32px;
+            pointer-events: none;
+        }
+
+        .santa-track {
+            display: inline-block;
+            white-space: nowrap;
+            animation: santaMove 3s linear infinite;
+        }
+
+        @keyframes santaMove {
+            from { transform: translateX(100%); }
+            to   { transform: translateX(-100%); }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- CUTE SNOW -->
+<div class="snowflakes">
+    <div class="snowflake">❄️</div><div class="snowflake">✨</div><div class="snowflake">❄️</div>
+    <div class="snowflake">✨</div><div class="snowflake">❄️</div><div class="snowflake">✨</div>
+</div>
+
+<!-- TOPBAR -->
+<div class="topbar">
+    <div class="title">🎁 Thêm Sản Phẩm Mới</div>
+    <a href="index.html" class="back-btn">⬅ Về trang chủ</a>
+</div>
+
+<!-- BANNER -->
+<div class="banner">
+    🎅✨ Bổ sung sản phẩm cho mùa Giáng Sinh 🎄
+</div>
+
+<!-- FORM CARD -->
+<div class="wrapper">
+    <form class="form-card" method="post" action="/Web-ban-hang/backend/add.php">
+        <div class="form-title">+ Thêm Sản Phẩm</div>
+        <div class="form-subtitle">Nhập thông tin sản phẩm của bạn nhé 💖</div>
+
+        <div class="field">
+            <label for="tenSP">Tên sản phẩm:</label>
+            <input class="input" type="text" id="tenSP" name="tenSP" required>
+        </div>
+
+        <div class="field">
+            <label for="gia">Giá (VNĐ):</label>
+            <input class="input" type="number" id="gia" name="gia" min="0" step="1000" required>
+        </div>
+
+        <div class="field">
+            <label for="moTa">Mô tả:</label>
+            <textarea class="textarea" id="moTa" name="moTa"></textarea>
+        </div>
+
+        <div class="field">
+            <label for="hinhAnh">Link hình ảnh (tùy chọn):</label>
+            <input class="input" type="text" id="hinhAnh" name="hinhAnh">
+            <div class="note">Có thể để trống nếu chưa có hình nhé.</div>
+        </div>
+
+        <div class="field">
+            <label for="maDM">Mã danh mục:</label>
+            <input class="input" type="text" id="maDM" name="maDM">
+        </div>
+
+        <div class="field">
+            <label for="soLuong">Số lượng:</label>
+            <input class="input" type="number" id="soLuong" name="soLuong" min="0" value="0">
+        </div>
+
+        <button type="submit" class="submit-btn">
+            🎄 Thêm Sản Phẩm
+        </button>
+    </form>
+</div>
+
+<!-- SANTA LINE ở CUỐI TRANG -->
+<div class="santa">
+    <div class="santa-track">🎅🦌🦌 &nbsp; 🎅🦌🦌 &nbsp; 🎅🦌🦌</div>
+</div>
+
+</body>
+</html>
