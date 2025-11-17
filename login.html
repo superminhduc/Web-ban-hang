@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Đăng Nhập / Đăng Ký - Nhân Phát Đức Beauty</title>
     <style>
-        /* CSS giống như trước */
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
@@ -86,12 +85,8 @@
             font-size: 14px;
             margin-top: 10px;
         }
-        .form-section {
-            display: none;
-        }
-        .form-section.active {
-            display: block;
-        }
+        .form-section { display: none; }
+        .form-section.active { display: block; }
     </style>
 </head>
 <body>
@@ -104,7 +99,8 @@
         <!-- Form Đăng Nhập -->
         <div class="form-section active" id="login-form-section">
             <h2>Đăng Nhập</h2>
-            <form id="login-form">
+            <!-- GỬI TRỰC TIẾP TỚI backend/login.php -->
+            <form id="login-form" action="backend/login.php" method="POST">
                 <div class="form-group">
                     <label for="login-username">Email hoặc Tên đăng nhập:</label>
                     <input type="text" id="login-username" name="username" required>
@@ -121,7 +117,8 @@
         <!-- Form Đăng Ký -->
         <div class="form-section" id="register-form-section">
             <h2>Đăng Ký Tài Khoản</h2>
-            <form id="register-form">
+            <!-- CÓ THỂ TẠO backend/register.php SAU -->
+            <form id="register-form" action="backend/register.php" method="POST">
                 <div class="form-group">
                     <label for="register-fullname">Họ và tên:</label>
                     <input type="text" id="register-fullname" name="fullname" required>
@@ -136,32 +133,15 @@
                 </div>
                 <div class="form-group">
                     <label for="register-confirm-password">Xác nhận mật khẩu:</label>
-                    <input type="password" id="register-confirm-password" name="confirm-password" required>
+                    <input type="password" id="register-confirm-password" name="confirm_password" required>
                 </div>
                 <button type="submit" class="btn">Đăng Ký</button>
                 <div id="register-error" class="error"></div>
             </form>
         </div>
-
-        <div class="links">
-            <a href="/forgot-password">Quên mật khẩu?</a> | <a href="/">Quay lại trang chủ</a>
-        </div>
     </div>
 
-    <!-- Notification -->
-    <div id="notification" class="notification" style="display: none;"></div>
-
     <script>
-        // Notification function
-        function showNotification(message) {
-            const notification = document.getElementById('notification');
-            notification.textContent = message;
-            notification.classList.add('show');
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 3000); // Hide after 3 seconds
-        }
-
         // Toggle giữa đăng nhập và đăng ký
         const loginToggle = document.getElementById('login-toggle');
         const registerToggle = document.getElementById('register-toggle');
@@ -182,79 +162,26 @@
             loginSection.classList.remove('active');
         });
 
-        // Xử lý form đăng nhập
-        document.getElementById('login-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const username = document.getElementById('login-username').value;
-            const password = document.getElementById('login-password').value;
-            const errorMsg = document.getElementById('login-error');
+        // Đọc lỗi từ URL (?error=...)
+        const params = new URLSearchParams(window.location.search);
+        const loginError = params.get('login_error');
+        const registerError = params.get('register_error');
 
-            if (!username || !password) {
-                errorMsg.textContent = 'Vui lòng nhập đầy đủ thông tin!';
-                return;
-            }
+        if (loginError) {
+            const msg = {
+                empty: 'Vui lòng nhập đầy đủ thông tin!',
+                wrongpass: 'Sai mật khẩu!',
+                nouser: 'Tài khoản không tồn tại!',
+                unknown: 'Lỗi không xác định!'
+            }[loginError] || 'Đăng nhập thất bại!';
+            document.getElementById('login-error').textContent = msg;
+        }
 
-            // Gửi dữ liệu đến backend/login.php
-            const formData = new FormData();
-            formData.append('username', username);
-            formData.append('password', password);
-
-            fetch('backend/login.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.text())
-            .then(data => {
-                if (data.includes('Đăng nhập thành công!')) {
-                    showNotification('Đăng nhập thành công!');
-                    window.location.href = 'index.html';
-                } else if (data.includes('Sai mật khẩu!')) {
-                    errorMsg.textContent = 'Sai mật khẩu!';
-                } else if (data.includes('Tài khoản không tồn tại!')) {
-                    errorMsg.textContent = 'Tài khoản không tồn tại!';
-                } else {
-                    errorMsg.textContent = 'Lỗi không xác định!';
-                }
-            })
-            .catch(err => {
-                console.error(err);
-                errorMsg.textContent = 'Lỗi kết nối!';
-            });
-        });
-
-        // Xử lý form đăng ký
-        document.getElementById('register-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const fullname = document.getElementById('register-fullname').value;
-            const email = document.getElementById('register-email').value;
-            const password = document.getElementById('register-password').value;
-            const confirmPassword = document.getElementById('register-confirm-password').value;
-            const errorMsg = document.getElementById('register-error');
-
-            if (!fullname || !email || !password || !confirmPassword) {
-                errorMsg.textContent = 'Vui lòng nhập đầy đủ thông tin!';
-                return;
-            }
-            if (password !== confirmPassword) {
-                errorMsg.textContent = 'Mật khẩu xác nhận không khớp!';
-                return;
-            }
-
-            // Kiểm tra email đã tồn tại
-            const storedUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
-            if (storedUsers.find(u => u.email === email)) {
-                errorMsg.textContent = 'Email này đã được đăng ký!';
-                return;
-            }
-
-            // Lưu tài khoản mới vào localStorage
-            storedUsers.push({ fullname, email, password });
-            localStorage.setItem('registeredUsers', JSON.stringify(storedUsers));
-
-            showNotification('Đăng ký thành công! Vui lòng đăng nhập.');
-            // Chuyển sang form đăng nhập
-            loginToggle.click();
-        });
+        if (registerError) {
+            document.getElementById('register-error').textContent = decodeURIComponent(registerError);
+            // tự chuyển sang tab đăng ký nếu có lỗi đăng ký
+            registerToggle.click();
+        }
     </script>
 </body>
 </html>
