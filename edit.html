@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Sửa Sản Phẩm</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f6fa;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="number"], textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #27ae60;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background: #219a52;
+        }
+        .btn-cancel {
+            background: #e74c3c;
+            margin-left: 10px;
+        }
+        .btn-cancel:hover {
+            background: #c0392b;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+        .success {
+            color: green;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✏️ Sửa Sản Phẩm</h1>
+        <form id="edit-form">
+            <div class="form-group">
+                <label for="tenSP">Tên sản phẩm:</label>
+                <input type="text" id="tenSP" name="tenSP" required>
+            </div>
+            <div class="form-group">
+                <label for="gia">Giá:</label>
+                <input type="number" id="gia" name="gia" required>
+            </div>
+            <div class="form-group">
+                <label for="moTa">Mô tả:</label>
+                <textarea id="moTa" name="moTa"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="hinhAnh">Hình ảnh (URL):</label>
+                <input type="text" id="hinhAnh" name="hinhAnh">
+            </div>
+            <div class="form-group">
+                <label for="soLuong">Số lượng:</label>
+                <input type="number" id="soLuong" name="soLuong" required>
+            </div>
+            <button type="submit" class="btn">Cập Nhật</button>
+            <a href="index.html" class="btn btn-cancel">Hủy</a>
+            <div id="message" class="error"></div>
+        </form>
+    </div>
+
+    <script>
+        // Lấy ID sản phẩm từ URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get('id');
+
+        if (!id) {
+            document.getElementById('message').textContent = 'ID sản phẩm không hợp lệ!';
+            return;
+        }
+
+        // Fetch dữ liệu sản phẩm từ backend/edit.php
+        fetch(`backend/edit.php?id=${id}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data && Object.keys(data).length > 0) {
+                    document.getElementById('tenSP').value = data.tenSP;
+                    document.getElementById('gia').value = data.gia;
+                    document.getElementById('moTa').value = data.moTa || '';
+                    document.getElementById('hinhAnh').value = data.hinhAnh || '';
+                    document.getElementById('soLuong').value = data.soLuong;
+                } else {
+                    document.getElementById('message').textContent = 'Không tìm thấy sản phẩm!';
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                document.getElementById('message').textContent = 'Lỗi tải dữ liệu!';
+            });
+
+        // Xử lý form submit
+        document.getElementById('edit-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const messageDiv = document.getElementById('message');
+            messageDiv.className = 'error';
+            messageDiv.textContent = '';
+
+            const formData = new FormData();
+            formData.append('id', id);
+            formData.append('tenSP', document.getElementById('tenSP').value);
+            formData.append('gia', document.getElementById('gia').value);
+            formData.append('moTa', document.getElementById('moTa').value);
+            formData.append('hinhAnh', document.getElementById('hinhAnh').value);
+            formData.append('soLuong', document.getElementById('soLuong').value);
+            formData.append('update', '1');
+
+            fetch('backend/edit.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                if (data.includes('Cập nhật thành công!')) {
+                    messageDiv.className = 'success';
+                    messageDiv.textContent = 'Cập nhật thành công!';
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 1000);
+                } else {
+                    messageDiv.textContent = 'Lỗi cập nhật!';
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                messageDiv.textContent = 'Lỗi kết nối!';
+            });
+        });
+    </script>
+</body>
+</html>
