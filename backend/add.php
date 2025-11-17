@@ -31,7 +31,7 @@
               VALUES ('$tenSP', '$gia', '$moTa', '$hinhAnh', '$maDM', '$soLuong')";
       if ($conn->query($sql) === TRUE) {
           echo "✅ Thêm thành công!";
-          header("refresh:1; url=index.php");
+          header("refresh:1; url=/trangweb/index.html");
       } else {
           echo "❌ Lỗi: " . $conn->error;
       }

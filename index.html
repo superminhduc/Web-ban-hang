@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý Sản phẩm</title>
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f6fa;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        .btn-add {
+            display: inline-block;
+            padding: 10px 16px;
+            background: #27ae60;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+        th {
+            background: #3498db;
+            color: #fff;
+        }
+        tr:hover {
+            background: #ecf0f1;
+        }
+        .btn-edit {
+            color: #e67e22;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .btn-del {
+            color: #e74c3c;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        img {
+            width: 80px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>📦 Quản lý Sản phẩm</h1>
+
+    <a href="/trangweb/backend/add.php" class="btn-add">➕ Thêm sản phẩm</a>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tên sản phẩm</th>
+                <th>Giá</th>
+                <th>Mô tả</th>
+                <th>Hình ảnh</th>
+                <th>Số lượng</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody id="tbodySP">
+            <tr><td colspan="7">Đang tải dữ liệu...</td></tr>
+        </tbody>
+    </table>
+
+    <script>
+        // Gọi tới file PHP lấy dữ liệu
+        fetch('/trangweb/backend/index.php')
+            .then(response => response.text())
+            .then(html => {
+                const tbody = document.getElementById('tbodySP');
+                tbody.innerHTML = html;
+            })
+            .catch(err => {
+                console.error(err);
+                document.getElementById('tbodySP').innerHTML =
+                    '<tr><td colspan="7">Lỗi tải dữ liệu!</td></tr>';
+            });
+    </script>
+</body>
+</html>
