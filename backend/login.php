@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($password == $row['password']) {  // chưa mã hóa
             $_SESSION['user_id'] = $row['id'];
             $_SESSION['username'] = $row['username'];
-            echo "<script>alert('Đăng nhập thành công!'); window.location.href='/trangweb/backend/index.php';</script>";
+            echo "<script>alert('Đăng nhập thành công!'); window.location.href='/trangweb/index.html';</script>";
             exit();
         } else {
             echo "<script>alert('Sai mật khẩu!'); window.location.href='login.php';</script>";
