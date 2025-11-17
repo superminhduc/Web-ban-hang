@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 14, 2025 at 04:38 AM
+-- Generation Time: Nov 17, 2025 at 02:42 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -20,20 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `qlbandoannhanh3`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `baocaonguoidung`
---
-
-CREATE TABLE `baocaonguoidung` (
-  `maBaoCao` int(11) NOT NULL,
-  `maNguoiDung` int(11) NOT NULL,
-  `noiDung` varchar(2000) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `ngayTao` datetime DEFAULT current_timestamp(),
-  `trangThai` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT 'Chưa xử lý'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -81,19 +67,6 @@ CREATE TABLE `donhang` (
   `ngayDat` datetime DEFAULT current_timestamp(),
   `tongTien` decimal(18,2) DEFAULT 0.00,
   `trangThai` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT 'Đang xử lý'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `gopy`
---
-
-CREATE TABLE `gopy` (
-  `maGopY` int(11) NOT NULL,
-  `maNguoiDung` int(11) NOT NULL,
-  `noiDung` varchar(2000) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `ngayTao` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -160,9 +133,25 @@ CREATE TABLE `sanpham` (
 --
 
 INSERT INTO `sanpham` (`maSP`, `tenSP`, `gia`, `moTa`, `hinhAnh`, `maDM`, `soLuong`) VALUES
-(1, 'Burger bò', 45000.00, '', '', 1, 20),
-(2, 'Coca-Cola', 15000.00, '', '', 2, 0),
-(7, 'Pizza hải sản', 280000.00, '', '', 1, 1);
+(30, 'Pizza hải sản', 12000.00, '', '', 1, 23),
+(31, 'Burger bò', 25000.00, '', '', 1, 1),
+(32, 'Nui đút lò', 120000.00, '', '', 1, 1),
+(33, 'Coca', 20000.00, '', '', 2, 1),
+(34, 'Sting', 20000.00, '', '', 2, 1),
+(35, 'Nước suối', 15000.00, '', '', 2, 1),
+(36, 'Mỳ ý sốt kem', 85000.00, '', '', 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `thongkedoanhthu`
+--
+
+CREATE TABLE `thongkedoanhthu` (
+  `id` int(11) NOT NULL,
+  `ngay` date NOT NULL,
+  `doanhThu` decimal(15,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -189,13 +178,6 @@ INSERT INTO `users` (`id`, `username`, `password`) VALUES
 --
 
 --
--- Indexes for table `baocaonguoidung`
---
-ALTER TABLE `baocaonguoidung`
-  ADD PRIMARY KEY (`maBaoCao`),
-  ADD KEY `maNguoiDung` (`maNguoiDung`);
-
---
 -- Indexes for table `chitietdonhang`
 --
 ALTER TABLE `chitietdonhang`
@@ -214,13 +196,6 @@ ALTER TABLE `danhmuc`
 --
 ALTER TABLE `donhang`
   ADD PRIMARY KEY (`maDH`),
-  ADD KEY `maNguoiDung` (`maNguoiDung`);
-
---
--- Indexes for table `gopy`
---
-ALTER TABLE `gopy`
-  ADD PRIMARY KEY (`maGopY`),
   ADD KEY `maNguoiDung` (`maNguoiDung`);
 
 --
@@ -244,6 +219,12 @@ ALTER TABLE `sanpham`
   ADD KEY `maDM` (`maDM`);
 
 --
+-- Indexes for table `thongkedoanhthu`
+--
+ALTER TABLE `thongkedoanhthu`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -252,12 +233,6 @@ ALTER TABLE `users`
 --
 -- AUTO_INCREMENT for dumped tables
 --
-
---
--- AUTO_INCREMENT for table `baocaonguoidung`
---
-ALTER TABLE `baocaonguoidung`
-  MODIFY `maBaoCao` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `chitietdonhang`
@@ -278,12 +253,6 @@ ALTER TABLE `donhang`
   MODIFY `maDH` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `gopy`
---
-ALTER TABLE `gopy`
-  MODIFY `maGopY` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `nguoidung`
 --
 ALTER TABLE `nguoidung`
@@ -299,7 +268,13 @@ ALTER TABLE `phanquyen`
 -- AUTO_INCREMENT for table `sanpham`
 --
 ALTER TABLE `sanpham`
-  MODIFY `maSP` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `maSP` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+
+--
+-- AUTO_INCREMENT for table `thongkedoanhthu`
+--
+ALTER TABLE `thongkedoanhthu`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -310,12 +285,6 @@ ALTER TABLE `users`
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `baocaonguoidung`
---
-ALTER TABLE `baocaonguoidung`
-  ADD CONSTRAINT `baocaonguoidung_ibfk_1` FOREIGN KEY (`maNguoiDung`) REFERENCES `nguoidung` (`maNguoiDung`);
 
 --
 -- Constraints for table `chitietdonhang`
@@ -329,12 +298,6 @@ ALTER TABLE `chitietdonhang`
 --
 ALTER TABLE `donhang`
   ADD CONSTRAINT `donhang_ibfk_1` FOREIGN KEY (`maNguoiDung`) REFERENCES `nguoidung` (`maNguoiDung`);
-
---
--- Constraints for table `gopy`
---
-ALTER TABLE `gopy`
-  ADD CONSTRAINT `gopy_ibfk_1` FOREIGN KEY (`maNguoiDung`) REFERENCES `nguoidung` (`maNguoiDung`);
 
 --
 -- Constraints for table `nguoidung`
