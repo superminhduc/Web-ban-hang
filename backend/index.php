@@ -13,8 +13,8 @@ if ($result->num_rows > 0) {
                 <td>{$row['hinhAnh']}</td>
                 <td>{$row['soLuong']}</td>
                 <td>
-                  <a href='../backend/edit.php?id={$row['maSP']}'>✏️ Sửa</a> |
-                  <a href='../backend/delete.php?id={$row['maSP']}' onclick='return confirm(\"Xóa sản phẩm này?\")'>🗑️ Xóa</a>
+                  <a href='/trangweb/backend/edit.php?id={$row['maSP']}'>✏️ Sửa</a> |
+                  <a href='/trangweb/backend/delete.php?id={$row['maSP']}' onclick='return confirm(\"Xóa sản phẩm này?\")'>🗑️ Xóa</a>
                 </td>
               </tr>";
     }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Quản lý Sản phẩm</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/css/styles.css">
 
     <style>
         body {
@@ -66,7 +66,7 @@
 
     <h1>📦 Quản lý Sản phẩm</h1>
 
-    <a href="backend/add.php" class="btn-add">➕ Thêm sản phẩm</a>
+    <a href="/trangweb/backend/add.php" class="btn-add">➕ Thêm sản phẩm</a>
 
     <table>
         <thead>
@@ -87,7 +87,7 @@
 
     <script>
         // Gọi tới file PHP lấy dữ liệu
-        fetch('backend/index.php')
+        fetch('/trangweb/backend/index.php')
             .then(response => response.text())
             .then(html => {
                 const tbody = document.getElementById('tbodySP');
