@@ -49,7 +49,7 @@ if (isset($_POST['update'])) {
         // Dùng JS redirect thay vì header (vì đã echo ở trên)
         echo "<script>
                 setTimeout(function() {
-                    window.location.href = 'index.php';
+                    window.location.href = '../index.html';
                 }, 1000);
               </script>";
     } else {
@@ -63,6 +63,7 @@ if (isset($_POST['update'])) {
 <head>
   <meta charset="UTF-8">
   <title>Sửa sản phẩm</title>
+  <link rel="stylesheet" href="../css/edit.css">
 </head>
 <body>
   <h1>✏️ Sửa sản phẩm</h1>
@@ -87,7 +88,7 @@ if (isset($_POST['update'])) {
   </form>
 
   <p>
-    <a href="index.php">⬅ Quay lại danh sách sản phẩm</a>
+    <a href="../index.html">⬅ Quay lại danh sách sản phẩm</a>
   </p>
 </body>
 </html>
