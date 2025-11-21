@@ -1,27 +1,38 @@
+/* Font chữ tổng thể và khoảng cách xung quanh trang */
 body {
   font-family: Arial;
   margin: 40px;
 }
+
+/* Tiêu đề trang */
 h1 {
   color: #333;
 }
+
+/* Bảng hiển thị dữ liệu sản phẩm */
 table {
-  border-collapse: collapse;
-  width: 100%;
+  border-collapse: collapse; /* Gộp viền bảng lại cho gọn */
+  width: 100%;               /* Bảng chiếm toàn chiều ngang */
 }
+
+/* Ô tiêu đề và nội dung trong bảng */
 th, td {
-  padding: 8px;
-  text-align: center;
+  padding: 8px;             /* Khoảng cách bên trong ô */
+  text-align: center;       /* Căn giữa nội dung */
 }
+
+/* Nút thêm sản phẩm */
 .btn-add {
-  display: inline-block;
-  padding: 8px 12px;
-  background: #4CAF50;
-  color: white;
-  text-decoration: none;
-  border-radius: 4px;
+  display: inline-block;    /* Hiển thị dạng nút */
+  padding: 8px 12px;        /* Kích thước nút */
+  background: #4CAF50;      /* Màu xanh lá */
+  color: white;             /* Chữ màu trắng */
+  text-decoration: none;    /* Bỏ gạch chân */
+  border-radius: 4px;       /* Bo góc nút */
 }
+
+/* Link chung cho trang */
 a {
-  text-decoration: none;
-  color: blue;
+  text-decoration: none;    /* Bỏ gạch chân */
+  color: blue;              /* Màu xanh dương */
 }
