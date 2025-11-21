@@ -1,4 +1,18 @@
 <?php
+<<<<<<< HEAD
+=======
+session_start();
+
+// Kiểm tra đăng nhập
+if (!isset($_SESSION['user_id'])) {
+    header("Location: /Web-ban-hang/login.html");
+    exit();
+}
+
+// Lấy role từ session
+$role = $_SESSION['role'] ?? 'employee';
+
+>>>>>>> NguyenMinhDuc
 // Kết nối database
 include 'connect.php';
 
@@ -57,12 +71,25 @@ while ($row = $result->fetch_assoc()) {
     echo "<td>{$row['soLuong']}</td>";
 
     // -----------------------------
+<<<<<<< HEAD
     // CÁC NÚT THAO TÁC: SỬA / XÓA
     // -----------------------------
 echo "<td>
         <a href=\"backend/edit.php?id={$row['maSP']}\">Sửa</a> | 
         <a href=\"backend/delete_confirm.php?id={$row['maSP']}\">Xóa</a>
       </td>";
+=======
+    // CÁC NÚT THAO TÁC: SỬA / XÓA (chỉ admin mới thấy)
+    // -----------------------------
+    echo "<td>";
+    if ($role === 'admin') {
+        echo "<a href=\"backend/edit.php?id={$row['maSP']}\">Sửa</a> | 
+              <a href=\"backend/delete_confirm.php?id={$row['maSP']}\">Xóa</a>";
+    } else {
+        echo "—"; // Nhân viên chỉ xem
+    }
+    echo "</td>";
+>>>>>>> NguyenMinhDuc
     echo "</tr>";
 }
 ?>
