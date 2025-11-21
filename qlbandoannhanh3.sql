@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 17, 2025 at 02:42 PM
+-- Generation Time: Nov 21, 2025 at 07:16 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -35,6 +35,15 @@ CREATE TABLE `chitietdonhang` (
   `donGia` decimal(18,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `chitietdonhang`
+--
+
+INSERT INTO `chitietdonhang` (`maCT`, `maDH`, `maSP`, `soLuong`, `donGia`) VALUES
+(7, 2, 38, 1, 280000.00),
+(8, 2, 38, 1, 280000.00),
+(9, 3, 40, 1, 140000.00);
+
 -- --------------------------------------------------------
 
 --
@@ -53,7 +62,8 @@ CREATE TABLE `danhmuc` (
 
 INSERT INTO `danhmuc` (`maDM`, `tenDM`, `moTa`) VALUES
 (1, 'Đồ ăn nhanh', 'Hamburger, Pizza, Gà rán'),
-(2, 'Thức uống', 'Cà phê, Sinh tố, Nước ép');
+(2, 'Thức uống', 'Cà phê, Sinh tố, Nước ép'),
+(6, 'Đồ ăn thêm', 'phô mai');
 
 -- --------------------------------------------------------
 
@@ -64,10 +74,40 @@ INSERT INTO `danhmuc` (`maDM`, `tenDM`, `moTa`) VALUES
 CREATE TABLE `donhang` (
   `maDH` int(11) NOT NULL,
   `maNguoiDung` int(11) NOT NULL,
+  `maSP` int(11) DEFAULT NULL,
   `ngayDat` datetime DEFAULT current_timestamp(),
   `tongTien` decimal(18,2) DEFAULT 0.00,
-  `trangThai` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT 'Đang xử lý'
+  `trangThai` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT 'Đang xử lý',
+  `maKM` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `donhang`
+--
+
+INSERT INTO `donhang` (`maDH`, `maNguoiDung`, `maSP`, `ngayDat`, `tongTien`, `trangThai`, `maKM`) VALUES
+(2, 1, 39, '2025-11-21 00:00:00', 15000.00, 'Đang xử lý', NULL),
+(3, 1, 40, '2025-11-21 00:00:00', 140000.00, 'đang xử lý', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `khuyenmai`
+--
+
+CREATE TABLE `khuyenmai` (
+  `maKM` int(11) NOT NULL,
+  `tenKM` varchar(255) NOT NULL,
+  `ngayBatDau` date NOT NULL,
+  `ngayKetThuc` date NOT NULL
+) ;
+
+--
+-- Dumping data for table `khuyenmai`
+--
+
+INSERT INTO `khuyenmai` (`maKM`, `tenKM`, `ngayBatDau`, `ngayKetThuc`) VALUES
+(2, 'giam10%sinhvien', '2025-11-13', '2025-11-30');
 
 -- --------------------------------------------------------
 
@@ -109,8 +149,7 @@ CREATE TABLE `phanquyen` (
 --
 
 INSERT INTO `phanquyen` (`roleID`, `roleName`) VALUES
-(1, 'Admin'),
-(2, 'Khách hàng');
+(1, 'Admin');
 
 -- --------------------------------------------------------
 
@@ -133,13 +172,9 @@ CREATE TABLE `sanpham` (
 --
 
 INSERT INTO `sanpham` (`maSP`, `tenSP`, `gia`, `moTa`, `hinhAnh`, `maDM`, `soLuong`) VALUES
-(30, 'Pizza hải sản', 12000.00, '', '', 1, 23),
-(31, 'Burger bò', 25000.00, '', '', 1, 1),
-(32, 'Nui đút lò', 120000.00, '', '', 1, 1),
-(33, 'Coca', 20000.00, '', '', 2, 1),
-(34, 'Sting', 20000.00, '', '', 2, 1),
-(35, 'Nước suối', 15000.00, '', '', 2, 1),
-(36, 'Mỳ ý sốt kem', 85000.00, '', '', 1, 1);
+(38, 'Pizza hải sản', 2800000.00, '', '', 1, 1),
+(39, 'coca', 15000.00, '', '', 2, 1),
+(40, 'Mỳ ý phô mai hải sản', 140000.00, '', '', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -171,7 +206,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `username`, `password`) VALUES
 (1, 'admin', '123456'),
-(2, 'user1', 'password1');
+(5, 'thaythanh', '123456');
 
 --
 -- Indexes for dumped tables
@@ -196,7 +231,15 @@ ALTER TABLE `danhmuc`
 --
 ALTER TABLE `donhang`
   ADD PRIMARY KEY (`maDH`),
-  ADD KEY `maNguoiDung` (`maNguoiDung`);
+  ADD KEY `maNguoiDung` (`maNguoiDung`),
+  ADD KEY `fk_donhang_sanpham` (`maSP`),
+  ADD KEY `fk_donhang_khuyenmai` (`maKM`);
+
+--
+-- Indexes for table `khuyenmai`
+--
+ALTER TABLE `khuyenmai`
+  ADD PRIMARY KEY (`maKM`);
 
 --
 -- Indexes for table `nguoidung`
@@ -238,19 +281,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `chitietdonhang`
 --
 ALTER TABLE `chitietdonhang`
-  MODIFY `maCT` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `maCT` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `danhmuc`
 --
 ALTER TABLE `danhmuc`
-  MODIFY `maDM` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `maDM` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `donhang`
 --
 ALTER TABLE `donhang`
-  MODIFY `maDH` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `maDH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `khuyenmai`
+--
+ALTER TABLE `khuyenmai`
+  MODIFY `maKM` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `nguoidung`
@@ -268,7 +317,7 @@ ALTER TABLE `phanquyen`
 -- AUTO_INCREMENT for table `sanpham`
 --
 ALTER TABLE `sanpham`
-  MODIFY `maSP` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `maSP` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `thongkedoanhthu`
@@ -280,7 +329,7 @@ ALTER TABLE `thongkedoanhthu`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
@@ -297,7 +346,9 @@ ALTER TABLE `chitietdonhang`
 -- Constraints for table `donhang`
 --
 ALTER TABLE `donhang`
-  ADD CONSTRAINT `donhang_ibfk_1` FOREIGN KEY (`maNguoiDung`) REFERENCES `nguoidung` (`maNguoiDung`);
+  ADD CONSTRAINT `donhang_ibfk_1` FOREIGN KEY (`maNguoiDung`) REFERENCES `nguoidung` (`maNguoiDung`),
+  ADD CONSTRAINT `fk_donhang_khuyenmai` FOREIGN KEY (`maKM`) REFERENCES `khuyenmai` (`maKM`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_donhang_sanpham` FOREIGN KEY (`maSP`) REFERENCES `sanpham` (`maSP`);
 
 --
 -- Constraints for table `nguoidung`
