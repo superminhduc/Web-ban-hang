@@ -117,9 +117,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <h1>Cập nhật danh mục thành công!</h1>
                 <p>Danh mục của bạn đã được cập nhật trong hệ thống 💖</p>
 
-                <!-- chỉnh lại link này cho đúng file danh sách danh mục của cậu -->
-                <a href="/Web-ban-hang/index.html" class="btn btn-primary">
-                    ⬅ Về trang chính
+                <!-- Quay lại trang quản lý danh mục (danhmuc.php mới) -->
+                <a href="/Web-ban-hang/backend/danhmuc.php" class="btn btn-primary">
+                    ⬅ Về trang danh mục
                 </a>
 
                 <a href="/Web-ban-hang/backend/edit_danhmuc.php?id=<?php echo $id; ?>" class="btn btn-secondary">
@@ -365,8 +365,8 @@ $dm = $rs->fetch_assoc();
 
 <div class="topbar">
     <div class="title">✏️ Sửa Danh Mục Noel</div>
-    <!-- chỉnh link này tới trang danh sách danh mục -->
-    <a href="/Web-ban-hang/index.html" class="back-btn">⬅ Quay lại</a>
+    <!-- quay lại trang danh mục mới -->
+    <a href="/Web-ban-hang/backend/danhmuc.php" class="back-btn">⬅ Quay lại</a>
 </div>
 
 <div class="banner">
@@ -392,7 +392,8 @@ $dm = $rs->fetch_assoc();
 
         <div class="button-row">
             <button type="submit" class="submit-btn">🎄 Cập nhật danh mục</button>
-            <button type="button" class="cancel-btn" onclick="window.location.href='/Web-ban-hang/index.html'">
+            <button type="button" class="cancel-btn"
+                    onclick="window.location.href='/Web-ban-hang/backend/danhmuc.php'">
                 Hủy
             </button>
         </div>

@@ -78,9 +78,7 @@
             user-select: none;
         }
 
-        .user-avatar-wrap {
-            position: relative;
-        }
+        .user-avatar-wrap { position: relative; }
 
         .avatar {
             width: 46px;
@@ -193,9 +191,7 @@
             color: #34495e;
         }
 
-        .status-item:hover {
-            background: #ffecef;
-        }
+        .status-item:hover { background: #ffecef; }
 
         .status-item.active {
             background: #ffe1e6;
@@ -229,14 +225,12 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.25);
         }
 
-        .logout-btn:hover {
-            transform: translateY(-1px);
-        }
+        .logout-btn:hover { transform: translateY(-1px); }
 
         /* BANNER NOEL */
         .banner {
             max-width: 650px;
-            margin: 18px auto 18px; /* thêm margin-bottom để không dính vào bảng */
+            margin: 18px auto 18px;
             padding: 10px 20px;
             border-radius: 999px;
             font-size: 16px;
@@ -249,12 +243,12 @@
             text-align: center;
             box-shadow: 0 8px 20px rgba(255, 105, 135, 0.35);
             position: relative;
-            z-index: 1; /* nằm trên background nhưng dưới tuyết */
+            z-index: 1;
         }
 
         /* ACTION BUTTONS */
         .actions {
-            margin-top: 0; /* đã có margin-bottom của banner phía trên */
+            margin-top: 0;
             display: flex;
             align-items: center;
             gap: 12px;
@@ -277,7 +271,7 @@
 
         .btn:hover { transform: translateY(-2px); }
 
-        .add-btn { background: #ff7675; }
+        .add-btn  { background: #ff7675; }
         .stat-btn { background: #ff4757; }
 
         .revenue-btn {
@@ -302,42 +296,17 @@
             box-shadow: 0 6px 16px rgba(255, 71, 87, 0.6);
         }
 
-        .search-box {
-            background: white;
-            padding: 7px 14px;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
-        }
-
-        .search-box input {
-            border: none;
-            outline: none;
-            font-size: 16px;
-        }
-
-        .search-box button {
-            background: #2ecc71;
-            border: none;
-            padding: 6px 14px;
-            border-radius: 20px;
-            color: white;
-            font-weight: 600;
-        }
-
         /* TABLE CUTE */
         table {
             width: 100%;
-            margin-top: 20px;          /* cách actions một đoạn */
+            margin-top: 20px;
             border-collapse: collapse;
             background: #fff8f8;
             border-radius: 18px;
             overflow: hidden;
             box-shadow: 0 6px 18px rgba(0,0,0,0.12);
             position: relative;
-            z-index: 1;                /* đảm bảo không bị banner đè lên */
+            z-index: 1;
         }
 
         th {
@@ -353,9 +322,7 @@
             font-size: 16px;
         }
 
-        #tbodySP td:last-child {
-            white-space: nowrap;
-        }
+        #tbodySP td:last-child { white-space: nowrap; }
 
         #tbodySP td:last-child a {
             display: inline-flex;
@@ -379,9 +346,7 @@
             background: linear-gradient(135deg, #ffc4ce, #ff9fb0);
             transform: translateY(-2px);
         }
-        #tbodySP td:last-child a:nth-of-type(1)::before {
-            content: "✏️";
-        }
+        #tbodySP td:last-child a:nth-of-type(1)::before { content: "✏️"; }
 
         #tbodySP td:last-child a:nth-of-type(2) {
             background: linear-gradient(135deg, #ff7987, #ff4d63);
@@ -391,9 +356,7 @@
             background: linear-gradient(135deg, #ff8c99, #ff5d72);
             transform: translateY(-2px);
         }
-        #tbodySP td:last-child a:nth-of-type(2)::before {
-            content: "🗑️";
-        }
+        #tbodySP td:last-child a:nth-of-type(2)::before { content: "🗑️"; }
 
         /* SANTA chạy ngang dưới cùng */
         .santa {
@@ -482,7 +445,6 @@
     🎅✨ Merry Christmas! Chúc bạn bán được nhiều đơn 🎁
 </div>
 
-<!-- ACTION BAR -->
 <div class="actions">
     <a href="add.html" class="btn add-btn">➕ Thêm</a>
 
@@ -490,11 +452,32 @@
 
     <a href="/Web-ban-hang/backend/thongkedoanhthu.php" class="btn revenue-btn">📈 Doanh thu</a>
 
-    <div class="search-box">
-        <span>🔍</span>
-        <input id="searchInput" placeholder="Tìm sản phẩm...">
-        <button onclick="searchTable()">Tìm</button>
-    </div>
+    <a href="/Web-ban-hang/backend/danhmuc.php" class="btn" style="
+        background:#1abc9c;color:#fff;padding:10px 22px;border-radius:18px;
+        box-shadow:0 4px 12px rgba(26, 188, 156,0.45);">
+        📂 Danh mục
+    </a>
+
+    <!-- NÚT ĐƠN HÀNG -->
+    <a href="/Web-ban-hang/backend/donhang.php" class="btn" style="
+        background:#ff9f43;color:#fff;padding:10px 22px;border-radius:18px;
+        box-shadow:0 4px 12px rgba(255,159,67,0.45);">
+        🧾 Đơn hàng
+    </a>
+
+    <!-- NÚT CHI TIẾT ĐƠN HÀNG -->
+    <a href="/Web-ban-hang/backend/chitietdonhang.php" class="btn" style="
+        background:#6c5ce7;color:#fff;padding:10px 22px;border-radius:18px;
+        box-shadow:0 4px 12px rgba(108,92,231,0.45);">
+        📦 Chi tiết đơn hàng
+    </a>
+
+    <!-- ⭐ NÚT MỚI: KHUYẾN MÃI -->
+    <a href="/Web-ban-hang/backend/khuyenmai.php" class="btn" style="
+        background:#e67e22;color:#fff;padding:10px 22px;border-radius:18px;
+        box-shadow:0 4px 12px rgba(230,126,34,0.45);">
+        🎁 Khuyến mãi
+    </a>
 </div>
 
 <!-- TABLE -->
@@ -515,15 +498,6 @@
 fetch('/Web-ban-hang/backend/index.php')
     .then(res => res.text())
     .then(html => document.getElementById("tbodySP").innerHTML = html);
-
-// tìm kiếm
-function searchTable() {
-    const key = document.getElementById("searchInput").value.toLowerCase();
-    document.querySelectorAll("#tbodySP tr").forEach(row => {
-        const name = row.cells[1]?.innerText.toLowerCase();
-        row.style.display = (!key || name.includes(key)) ? "" : "none";
-    });
-}
 
 // toggle dropdown
 const userBtn = document.getElementById("userBtn");

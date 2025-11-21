@@ -7,11 +7,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700&display=swap');
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: "Baloo 2", cursive;
@@ -23,298 +19,95 @@
             padding: 20px;
         }
 
-        /* ===== TUYẾT RƠI DÀY HƠN ===== */
-        .snowflakes {
-            position: fixed;
-            width: 100%;
-            top: 0;
-            left: 0;
-            z-index: 5;
-            pointer-events: none;
-        }
+        /* TUYẾT */
+        .snowflakes { position: fixed; width: 100%; top: 0; left: 0; z-index: 5; pointer-events: none; }
+        .snowflake { position: fixed; top: -10px; color:#fff; opacity:.95; font-size:18px; animation:snow 7s linear infinite; }
+        @keyframes snow { 0%{transform:translateY(-10px);opacity:0;} 10%{opacity:1;} 100%{transform:translateY(105vh) rotate(360deg);opacity:0;} }
 
-        .snowflake {
-            position: fixed;
-            top: -10px;
-            color: #ffffff;
-            opacity: 0.95;
-            font-size: 18px;
-            animation: snow 7s linear infinite;
-        }
+        /* EMOJI */
+        .top-emoji { text-align:center; font-size:26px; margin-top:2px; margin-bottom:14px; text-shadow:0 3px 8px rgba(0,0,0,0.25); }
 
-        @keyframes snow {
-            0%   { transform: translateY(-10px) rotate(0deg); opacity: 0; }
-            10%  { opacity: 1; }
-            100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
-        }
+        /* WRAPPER */
+        .page-wrap { min-height:calc(100vh - 40px); display:flex; flex-direction:column;align-items:center; justify-content:center; gap:24px; }
 
-        .snowflake:nth-child(1){left:4%; animation-duration:8s;}
-        .snowflake:nth-child(2){left:11%; animation-duration:6.5s;}
-        .snowflake:nth-child(3){left:18%; animation-duration:9s;}
-        .snowflake:nth-child(4){left:26%; animation-duration:7.5s;}
-        .snowflake:nth-child(5){left:34%; animation-duration:8.5s;}
-        .snowflake:nth-child(6){left:45%; animation-duration:7s;}
-        .snowflake:nth-child(7){left:56%; animation-duration:9.5s;}
-        .snowflake:nth-child(8){left:64%; animation-duration:7.2s;}
-        .snowflake:nth-child(9){left:73%; animation-duration:8.8s;}
-        .snowflake:nth-child(10){left:81%; animation-duration:6.8s;}
-        .snowflake:nth-child(11){left:90%; animation-duration:9.2s;}
-        .snowflake:nth-child(12){left:96%; animation-duration:7.7s;}
-
-        /* ===== DÒNG EMOJI TRÊN ===== */
-        .top-emoji {
-            text-align: center;
-            font-size: 26px;
-            margin-top: 2px;
-            margin-bottom: 14px;
-            text-shadow: 0 3px 8px rgba(0,0,0,0.25);
-        }
-
-        /* ===== WRAPPER: CARD + BANNER XẾP THEO CỘT ===== */
-        .page-wrap {
-            min-height: calc(100vh - 40px);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 24px; /* khoảng cách giữa card và banner */
-        }
-
-        /* ===== CARD LUXURY HỒNG – TỐI ===== */
+        /* CARD */
         .auth-card {
-            width: 100%;
-            max-width: 460px;
-            background:
-                radial-gradient(circle at top left, rgba(255,255,255,0.16), transparent 55%),
-                linear-gradient(145deg, #211829, #1b1725 55%, #28152b 100%);
-            border-radius: 28px;
-            padding: 26px 30px 30px;
-            box-shadow:
-                0 20px 45px rgba(0,0,0,0.55),
-                0 0 0 1px rgba(255,255,255,0.08);
-            position: relative;
-            overflow: hidden;
+            width:100%; max-width:460px;
+            background: radial-gradient(circle at top left, rgba(255,255,255,0.16), transparent 55%),
+                        linear-gradient(145deg, #211829, #1b1725 55%, #28152b 100%);
+            border-radius:28px; padding:26px 30px 30px;
+            box-shadow:0 20px 45px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.08);
+            position:relative; overflow:hidden;
         }
 
         .auth-card::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            padding: 2px;
-            background: linear-gradient(120deg, #ffe9a9, #ffb3c6, #ffe9a9);
-            -webkit-mask:
-                linear-gradient(#000 0 0) content-box,
-                linear-gradient(#000 0 0);
-            -webkit-mask-composite: xor;
-                    mask-composite: exclude;
-            opacity: 0.85;
-            pointer-events: none;
+            content:""; position:absolute; inset:0; border-radius:inherit; padding:2px;
+            background:linear-gradient(120deg,#ffe9a9,#ffb3c6,#ffe9a9);
+            -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+            -webkit-mask-composite:xor; mask-composite:exclude;
+            opacity:.85; pointer-events:none;
         }
 
-        /* ===== TAB LOGIN / REGISTER ===== */
-        .tab-switch {
-            display: flex;
-            background: rgba(0,0,0,0.45);
-            border-radius: 999px;
-            padding: 4px;
-            margin-bottom: 22px;
-            position: relative;
-        }
-
-        .tab-btn {
-            flex: 1;
-            border: none;
-            background: transparent;
-            color: #f8c9d6;
-            font-size: 16px;
-            padding: 8px 0;
-            border-radius: 999px;
-            cursor: pointer;
-            position: relative;
-            z-index: 2;
-        }
-
-        .tab-btn.active {
-            color: #3b1a27;
-            font-weight: 700;
-        }
-
+        /* TABS */
+        .tab-switch { display:flex; background:rgba(0,0,0,0.45); padding:4px; border-radius:999px; margin-bottom:22px; position:relative; }
+        .tab-btn { flex:1; border:none; background:transparent; color:#f8c9d6; font-size:16px; padding:8px 0; border-radius:999px; cursor:pointer; z-index:2; }
+        .tab-btn.active { color:#3b1a27; font-weight:700; }
         .tab-highlight {
-            position: absolute;
-            top: 4px;
-            bottom: 4px;
-            width: 50%;
-            border-radius: 999px;
-            background: linear-gradient(135deg, #ffe6a7, #ffc371);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.35);
-            transition: transform 0.25s ease;
-            z-index: 1;
+            position:absolute; top:4px; bottom:4px; width:50%; border-radius:999px;
+            background:linear-gradient(135deg,#ffe6a7,#ffc371);
+            box-shadow:0 6px 16px rgba(0,0,0,0.35);
+            transition:transform .25s ease; z-index:1;
         }
-        .tab-highlight.right {
-            transform: translateX(100%);
-        }
+        .tab-highlight.right { transform:translateX(100%); }
 
-        .card-title {
-            text-align: center;
-            font-size: 22px;
-            margin-bottom: 6px;
-        }
+        .card-title { text-align:center; font-size:22px; margin-bottom:6px; }
+        .card-subtitle { text-align:center; font-size:13px; color:#f0d2df; margin-bottom:20px; }
 
-        .card-subtitle {
-            text-align: center;
-            font-size: 13px;
-            color: #f0d2df;
-            margin-bottom: 20px;
-        }
-
-        .field {
-            margin-bottom: 14px;
-        }
-
-        label {
-            display: block;
-            font-size: 14px;
-            color: #ffeaf2;
-            margin-bottom: 4px;
-        }
+        .field { margin-bottom:14px; }
+        label { display:block; font-size:14px; color:#ffeaf2; margin-bottom:4px; }
 
         .input {
-            width: 100%;
-            padding: 9px 12px;
-            border-radius: 14px;
-            border: 1px solid rgba(255,255,255,0.25);
-            background: rgba(0,0,0,0.45);
-            color: #ffffff;
-            font-size: 14px;
-            outline: none;
-            transition: 0.2s;
+            width:100%; padding:9px 12px; border-radius:14px;
+            border:1px solid rgba(255,255,255,0.25);
+            background:rgba(0,0,0,0.45); color:#fff; font-size:14px;
         }
 
-        .input::placeholder {
-            color: rgba(236, 240, 241, 0.6);
+        .primary-btn, .ghost-btn {
+            width:100%; border-radius:999px; padding:9px 0; border:none;
+            font-size:15px; font-weight:700; cursor:pointer;
+            display:flex; align-items:center; justify-content:center; gap:8px;
+            margin-top:4px;
         }
 
-        .input:focus {
-            border-color: #ffcf7f;
-            box-shadow: 0 0 0 1px rgba(255,207,127,0.6);
-            background: rgba(0,0,0,0.65);
-        }
+        .primary-btn { background:linear-gradient(135deg,#3ddc97,#1abc9c); color:#fff; box-shadow:0 8px 22px rgba(0,0,0,0.45); }
+        .ghost-btn { background:transparent; color:#ffd27f; border:1px solid rgba(255,210,127,0.7); margin-top:10px; }
 
-        .primary-btn,
-        .ghost-btn {
-            width: 100%;
-            border-radius: 999px;
-            padding: 9px 0;
-            border: none;
-            font-size: 15px;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 4px;
-        }
+        .tab-pane { display:none; }
+        .tab-pane.active { display:block; }
 
-        .primary-btn {
-            background: linear-gradient(135deg, #3ddc97, #1abc9c);
-            color: #ffffff;
-            box-shadow: 0 8px 22px rgba(0,0,0,0.45);
-        }
-
-        .primary-btn:hover {
-            transform: translateY(-1px);
-        }
-
-        .ghost-btn {
-            background: transparent;
-            color: #ffd27f;
-            border: 1px solid rgba(255,210,127,0.7);
-            margin-top: 10px;
-        }
-
-        .ghost-btn:hover {
-            background: rgba(255,210,127,0.08);
-        }
-
-        .small-text {
-            font-size: 11px;
-            color: #f2c9d7;
-            margin-top: 6px;
-            text-align: center;
-        }
-
-        .forgot {
-            text-align: right;
-            margin-top: 8px;
-            font-size: 12px;
-        }
-
-        .forgot a {
-            color: #ffd27f;
-            text-decoration: none;
-        }
-
-        .forgot a:hover {
-            text-decoration: underline;
-        }
-
-        .tab-pane { display: none; }
-        .tab-pane.active { display: block; }
-
-        /* ===== BANNER NOEL CHẠY – ĐI CÙNG CARD ===== */
-        .santa {
-            font-size: 40px;
-            text-align: center;
-            pointer-events: none;
-        }
-        .santa-track {
-            display: inline-block;
-            white-space: nowrap;
-            animation: santaMove 14s linear infinite;
-        }
-        @keyframes santaMove {
-            from { transform: translateX(100%); }
-            to   { transform: translateX(-100%); }
-        }
-
-        @media (max-width: 520px) {
-            body {
-                padding: 14px;
-            }
-            .auth-card {
-                padding: 22px 18px 24px;
-            }
-        }
+        /* SANTA */
+        .santa { font-size:40px; text-align:center; pointer-events:none; }
+        .santa-track { display:inline-block; white-space:nowrap; animation:santaMove 14s linear infinite; }
+        @keyframes santaMove { from{transform:translateX(100%);} to{transform:translateX(-100%);} }
     </style>
 </head>
 
 <body>
-    <!-- TUYẾT RƠI -->
+
+    <!-- TUYẾT -->
     <div class="snowflakes">
-        <div class="snowflake">❄️</div>
-        <div class="snowflake">✨</div>
-        <div class="snowflake">❄️</div>
-        <div class="snowflake">✨</div>
-        <div class="snowflake">❄️</div>
-        <div class="snowflake">✨</div>
-        <div class="snowflake">❄️</div>
-        <div class="snowflake">✨</div>
-        <div class="snowflake">❄️</div>
-        <div class="snowflake">✨</div>
-        <div class="snowflake">❄️</div>
-        <div class="snowflake">✨</div>
+        <div class="snowflake">❄️</div><div class="snowflake">✨</div>
+        <div class="snowflake">❄️</div><div class="snowflake">✨</div>
+        <div class="snowflake">❄️</div><div class="snowflake">✨</div>
+        <div class="snowflake">❄️</div><div class="snowflake">✨</div>
+        <div class="snowflake">❄️</div><div class="snowflake">✨</div>
     </div>
 
-    <!-- EMOJI NOEL -->
-    <div class="top-emoji">
-        🎄🎅🎁🦌✨ 🎄🎅🎁🦌✨
-    </div>
+    <div class="top-emoji">🎄🎅🎁🦌✨ 🎄🎅🎁🦌✨</div>
 
     <div class="page-wrap">
-        <!-- CARD LOGIN / REGISTER -->
         <div class="auth-card">
+
             <!-- TAB -->
             <div class="tab-switch">
                 <div class="tab-highlight" id="tabHighlight"></div>
@@ -323,15 +116,13 @@
             </div>
 
             <div class="card-title">Chào mừng trở lại kho Noel 🎀</div>
-            <div class="card-subtitle">
-                Đăng nhập để quản lý sản phẩm Giáng Sinh sang – xịn – mịn 💎
-            </div>
+            <div class="card-subtitle">Đăng nhập để quản lý sản phẩm Giáng Sinh sang – xịn – mịn 💎</div>
 
-            <!-- FORM ĐĂNG NHẬP -->
+            <!-- LOGIN -->
             <div class="tab-pane active" id="paneLogin">
                 <form method="post" action="/Web-ban-hang/backend/login.php">
                     <div class="field">
-                        <label for="loginUser">Email hoặc Tên đăng nhập:</label>
+                        <label for="loginUser">Tên đăng nhập:</label>
                         <input class="input" type="text" id="loginUser" name="username"
                                placeholder="vd: admin_noel" required>
                     </div>
@@ -342,33 +133,18 @@
                                placeholder="••••••••" required>
                     </div>
 
-                    <div class="forgot">
-                        <a href="#">Quên mật khẩu?</a>
-                    </div>
-
-                    <button type="submit" class="primary-btn">
-                        🎄 Đăng Nhập
-                    </button>
-
-                    <div class="small-text">
-                        Chưa có tài khoản? Chuyển sang tab <b>Đăng Ký</b> để tạo mới nhé 💖
-                    </div>
+                    <button type="submit" class="primary-btn">🎄 Đăng Nhập</button>
                 </form>
             </div>
 
-            <!-- FORM ĐĂNG KÝ -->
+            <!-- REGISTER (ĐÃ XÓA EMAIL) -->
             <div class="tab-pane" id="paneRegister">
                 <form method="post" action="/Web-ban-hang/backend/register.php">
+
                     <div class="field">
                         <label for="regUser">Tên đăng nhập:</label>
                         <input class="input" type="text" id="regUser" name="username"
                                placeholder="vd: santa_admin" required>
-                    </div>
-
-                    <div class="field">
-                        <label for="regEmail">Email:</label>
-                        <input class="input" type="email" id="regEmail" name="email"
-                               placeholder="vd: santa@noel.com" required>
                     </div>
 
                     <div class="field">
@@ -383,18 +159,15 @@
                                placeholder="Nhập lại để xác nhận" required>
                     </div>
 
-                    <button type="submit" class="primary-btn">
-                        ✨ Tạo tài khoản mới
-                    </button>
+                    <button type="submit" class="primary-btn">✨ Tạo tài khoản mới</button>
 
-                    <button type="button" class="ghost-btn" id="backToLogin">
-                        ⬅ Quay lại Đăng Nhập
-                    </button>
+                    <button type="button" class="ghost-btn" id="backToLogin">⬅ Quay lại Đăng Nhập</button>
+
                 </form>
             </div>
         </div>
 
-        <!-- BANNER ÔNG GIÀ NOEL & TUẦN LỘC CHẠY – ĐI CHUNG VỚI CARD -->
+        <!-- SANTA -->
         <div class="santa">
             <div class="santa-track">
                 🎅🦌🦌 🎁 🎄 &nbsp; 🎅🦌🦌 🎁 🎄 &nbsp; 🎅🦌🦌 🎁 🎄
@@ -403,22 +176,21 @@
     </div>
 
     <script>
-        const btnLogin    = document.getElementById('btnLogin');
-        const btnRegister = document.getElementById('btnRegister');
-        const paneLogin   = document.getElementById('paneLogin');
-        const paneRegister= document.getElementById('paneRegister');
-        const tabHighlight= document.getElementById('tabHighlight');
-        const backToLogin = document.getElementById('backToLogin');
+        const btnLogin=document.getElementById('btnLogin');
+        const btnRegister=document.getElementById('btnRegister');
+        const paneLogin=document.getElementById('paneLogin');
+        const paneRegister=document.getElementById('paneRegister');
+        const tabHighlight=document.getElementById('tabHighlight');
+        const backToLogin=document.getElementById('backToLogin');
 
-        function showLogin() {
+        function showLogin(){
             btnLogin.classList.add('active');
             btnRegister.classList.remove('active');
             paneLogin.classList.add('active');
             paneRegister.classList.remove('active');
             tabHighlight.classList.remove('right');
         }
-
-        function showRegister() {
+        function showRegister(){
             btnRegister.classList.add('active');
             btnLogin.classList.remove('active');
             paneRegister.classList.add('active');
@@ -426,9 +198,9 @@
             tabHighlight.classList.add('right');
         }
 
-        btnLogin.addEventListener('click', showLogin);
-        btnRegister.addEventListener('click', showRegister);
-        backToLogin.addEventListener('click', showLogin);
+        btnLogin.addEventListener('click',showLogin);
+        btnRegister.addEventListener('click',showRegister);
+        backToLogin.addEventListener('click',showLogin);
     </script>
 </body>
 </html>
